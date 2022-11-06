@@ -25,7 +25,12 @@
 		"webpack-dev-server": "^4.11.1"
 	},
 	"dependencies": {
+		"datauri": "^4.1.0",
+		"i": "^0.3.7",
+		"jsdom": "^20.0.2",
 		"lodash": "^4.17.21",
+		"npm": "^8.19.3",
+		"opener": "^1.5.2",
 		"phaser": "^3.55.2",
 		"socket.io": "^4.5.3",
 		"socket.io-client": "^4.5.3"

@@ -4,22 +4,31 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 module.exports = {
 	mode: "development",
 	entry: {
-		index: "./src/index.js",
+		client: "./src/client.js",
+		server: "./src/server.js",
 	},
-	devtool: "inline-source-map",
-	devServer: {
-		static: "./dist",
-	},
-	plugins: [
-		new HtmlWebpackPlugin({
-			title: "Development",
-		}),
-	],
 	output: {
 		filename: "[name].bundle.js",
 		path: path.resolve(__dirname, "dist"),
 		clean: true,
 		publicPath: "/",
+	},
+	devtool: "inline-source-map",
+	devServer: {
+		static: "./dist",
+	},
+	stats: "errors-warnings",
+	plugins: [
+		new HtmlWebpackPlugin({
+			title: "Development",
+		}),
+	],
+	resolve: {
+		alias: {
+			Scenes: path.resolve(__dirname, "src/scenes/"),
+			GameObjects: path.resolve(__dirname, "src/gameobjects/"),
+			Utilities: path.resolve(__dirname, "src/utilities/"),
+		},
 	},
 	module: {
 		rules: [
