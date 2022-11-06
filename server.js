@@ -3,6 +3,10 @@ const webpack = require("webpack");
 const webpackDevMiddleware = require("webpack-dev-middleware");
 const config = require("./webpack.config.js");
 const compiler = webpack(config);
+const webpackInstance = webpackDevMiddleware(compiler, {
+	publicPath: config.output.publicPath,
+	writeToDisk: true,
+});
 
 // Util to open the browser for you on start
 const opener = require("opener");
@@ -21,18 +25,17 @@ const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
 
-// Tell express to use the webpack-dev-middleware and use the webpack.config.js
-// configuration file as a base.
-app.use(
-	webpackDevMiddleware(compiler, {
-		publicPath: config.output.publicPath,
-	})
-);
-
-app.use(express.static("dist"));
+app.use(webpackInstance);
+// app.use(express.static("dist"));
 
 io.on("connection", (socket) => {
 	console.log("a user connected");
+});
+
+webpackInstance.waitUntilValid(() => {
+	const filename = webpackInstance.getFilenameFromUrl("/server.bundle.js");
+
+	console.log(`Filename is ${filename}`);
 });
 
 server.listen(3000, function () {
@@ -44,7 +47,7 @@ server.listen(3000, function () {
 
 const { JSDOM } = jsdom;
 function setupAuthoritativePhaser() {
-	JSDOM.fromFile(path.join(__dirname, "dist/serverEngine.html"), {
+	JSDOM.fromFile(path.join(__dirname, "dist/engine.html"), {
 		runScripts: "dangerously",
 		resources: "usable",
 		pretendToBeVisual: true,

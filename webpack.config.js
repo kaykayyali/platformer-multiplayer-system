@@ -19,8 +19,18 @@ module.exports = {
 	},
 	stats: "errors-warnings",
 	plugins: [
+		// This is how to make 2 different html files.
+		// One for the client, one for the server
 		new HtmlWebpackPlugin({
-			title: "Development",
+			title: "Client App",
+			filename: "index.html",
+			chunks: ["client"],
+		}),
+		new HtmlWebpackPlugin({
+			title: "Server App",
+			filename: "engine.html",
+			template: "src/server.html",
+			chunks: [],
 		}),
 	],
 	resolve: {
