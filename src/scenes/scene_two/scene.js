@@ -53,7 +53,6 @@ class Scene_Two extends Phaser.Scene {
 		console.log("Game Server Starting");
 		this.serverPlayers = {};
 		this.serverGameObjects = this.physics.add.group();
-		this.physics.add.collider(this.serverGameObjects);
 		serverIO.on("connection", (socket) => {
 			console.log(`${socket.id} connected`);
 
@@ -94,6 +93,7 @@ class Scene_Two extends Phaser.Scene {
 				this.handlePlayerInput(socket.id, inputData);
 			});
 		});
+		this.physics.add.collider(this.serverGameObjects);
 	}
 	handleClientCreate() {
 		this.socket = io();
@@ -165,6 +165,7 @@ class Scene_Two extends Phaser.Scene {
 			},
 		});
 		this.cursors = this.input.keyboard.createCursorKeys();
+		this.physics.add.collider(this.gamePlayers);
 		// this.playerGameObject = new Soldier(this, 200, 200, "soldier-sprite");
 		// this.playerGameObject = this.add.rectangle(200, 200, 200, 200, 0xff000);
 	}
