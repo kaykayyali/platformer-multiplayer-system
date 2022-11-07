@@ -29,7 +29,7 @@ import { Server } from "socket.io";
 const io = new Server(server);
 
 app.use(webpackInstance);
-app.use(express.static("src"));
+
 
 server.listen(3000);
 
