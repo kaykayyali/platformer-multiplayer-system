@@ -33,10 +33,6 @@ app.use(express.static("src"));
 
 server.listen(3000);
 
-io.on("connection", (socket) => {
-	console.log("a user connected");
-});
-
 webpackInstance.waitUntilValid(() => {
 	const filename = webpackInstance.getFilenameFromUrl("/server.bundle.js");
 
@@ -57,8 +53,8 @@ function setupAuthoritativePhaser() {
 		url: "http://localhost:3000",
 	})
 		.then((dom) => {
-			console.log("location is", dom.window.location.href);
-			dom.window.io = io;
+			dom.window.serverIO = io;
+			dom.window.isServer = true;
 			dom.window.URL.createObjectURL = (blob) => {
 				if (blob) {
 					return parser.format(

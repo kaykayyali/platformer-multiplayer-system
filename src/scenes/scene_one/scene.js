@@ -1,5 +1,10 @@
 import Phaser from "phaser";
 import Background from "./bg.jpg";
+import { uniqueNamesGenerator, starWars } from "unique-names-generator";
+
+const customConfig = {
+	dictionaries: [starWars],
+};
 
 class Scene_One extends Phaser.Scene {
 	constructor() {
@@ -16,6 +21,8 @@ class Scene_One extends Phaser.Scene {
 			this.cameras.main.centerX,
 			this.cameras.main.centerY
 		);
+		sessionStorage.setItem("name", uniqueNamesGenerator(customConfig));
+
 		this.add.image(
 			screenCenter.x,
 			screenCenter.y,
@@ -29,6 +36,21 @@ class Scene_One extends Phaser.Scene {
 				color: "#ffffff",
 				align: "center",
 			})
+			.setPadding(64, 16)
+			.setOrigin(0.5);
+
+		this.secondaryHeading = this.add
+			.text(
+				screenCenter.x,
+				screenCenter.y / 1.5,
+				`Your name is ${sessionStorage.getItem("name")}`,
+				{
+					fontSize: "32px",
+					fontFamily: "Arial",
+					color: "#ffffff",
+					align: "center",
+				}
+			)
 			.setPadding(64, 16)
 			.setOrigin(0.5);
 

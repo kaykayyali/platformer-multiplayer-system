@@ -7,10 +7,9 @@
 		"node": ">=16.18.0"
 	},
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1",
-		"watch": "webpack --watch",
-		"start": "webpack serve --open",
+		"start": "npm run server",
 		"server": "node --loader=./loader.mjs --no-warnings server.js",
+		"watch": "webpack --watch",
 		"build": "webpack"
 	},
 	"type": "module",
@@ -36,7 +35,9 @@
 		"lodash": "^4.17.21",
 		"opener": "^1.5.2",
 		"phaser": "^3.55.2",
+		"phaser3-rex-plugins": "^1.1.75",
 		"socket.io": "^4.5.3",
-		"socket.io-client": "^4.5.3"
+		"socket.io-client": "^4.5.3",
+		"unique-names-generator": "^4.7.1"
 	}
 }
