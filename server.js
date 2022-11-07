@@ -43,7 +43,7 @@ if (process.env.NODE_ENV !== "production") {
 	setupAuthoritativePhaser();
 }
 
-server.listen(3000);
+server.listen(process.env.PORT || 3000);
 
 function setupAuthoritativePhaser() {
 	const { JSDOM } = jsdom;
