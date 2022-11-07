@@ -45,8 +45,8 @@ if (process.env.NODE_ENV !== "production") {
 
 server.listen(3000);
 
-const { JSDOM } = jsdom;
 function setupAuthoritativePhaser() {
+	const { JSDOM } = jsdom;
 	JSDOM.fromFile(path.join(__dirname, "dist/engine.html"), {
 		runScripts: "dangerously",
 		resources: "usable",
