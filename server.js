@@ -38,9 +38,6 @@ webpackInstance.waitUntilValid(() => {
 
 	console.log(`Filename is ${filename}`);
 	console.log("Server Ready on http://localhost:3000");
-	if (!process.env.PROD) {
-		opener("http://localhost:3000");
-	}
 	setupAuthoritativePhaser();
 });
 
