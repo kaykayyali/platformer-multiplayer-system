@@ -51,7 +51,7 @@ function setupAuthoritativePhaser() {
 		runScripts: "dangerously",
 		resources: "usable",
 		pretendToBeVisual: true,
-		url: "http://localhost:3000",
+		url: `http://localhost:${process.env.PORT || 3000}`,
 	})
 		.then((dom) => {
 			dom.window.serverIO = io;
