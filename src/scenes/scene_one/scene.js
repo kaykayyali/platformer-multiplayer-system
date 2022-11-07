@@ -22,10 +22,29 @@ class Scene_One extends Phaser.Scene {
 			`${this.scene.key}-Background`
 		);
 
-		this.primaryButton = this.add
-			.rectangle(screenCenter.x, screenCenter.y, 400, 200, 0xff0000, 1)
+		this.primaryHeading = this.add
+			.text(screenCenter.x, screenCenter.y / 2, "Welcome to the Void", {
+				fontSize: "32px",
+				fontFamily: "Arial",
+				color: "#ffffff",
+				align: "center",
+			})
+			.setPadding(64, 16)
+			.setOrigin(0.5);
+
+		this.primaryCTA = this.add
+			.text(screenCenter.x, screenCenter.y * 1.5, "Enter Game", {
+				fontSize: "16px",
+				fontFamily: "Arial",
+				color: "#ffffff",
+				backgroundColor: "#ff0000",
+				align: "center",
+			})
+			.setPadding(32, 16)
+			.setOrigin(0.5)
 			.setInteractive();
-		this.primaryButton.on(Phaser.Input.Events.POINTER_DOWN, (event) => {
+
+		this.primaryCTA.on(Phaser.Input.Events.POINTER_DOWN, (event) => {
 			this.scene.start("Scene_Two");
 		});
 	}

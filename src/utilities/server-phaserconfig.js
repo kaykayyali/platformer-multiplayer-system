@@ -7,7 +7,6 @@ const config = {
 	width: 800,
 	height: 600,
 	parent: "phaser",
-	pixelArt: true,
 
 	physics: {
 		default: "arcade",
@@ -15,6 +14,8 @@ const config = {
 			gravity: { y: 0 },
 		},
 	},
+	audio: false,
+	autoFocus: false,
 	scene: [Scene_One, Scene_Two],
 };
 

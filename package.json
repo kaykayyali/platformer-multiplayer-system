@@ -3,13 +3,17 @@
 	"version": "1.0.0",
 	"description": "",
 	"private": true,
+	"engines": {
+		"node": ">=16.18.0"
+	},
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"watch": "webpack --watch",
 		"start": "webpack serve --open",
-		"server": "node server.js",
+		"server": "node --loader=./loader.mjs --no-warnings server.js",
 		"build": "webpack"
 	},
+	"type": "module",
 	"keywords": [],
 	"author": "",
 	"license": "ISC",
@@ -25,11 +29,11 @@
 		"webpack-dev-server": "^4.11.1"
 	},
 	"dependencies": {
+		"canvas": "^2.10.2",
 		"datauri": "^4.1.0",
-		"i": "^0.3.7",
+		"esm-module-alias": "^2.0.1",
 		"jsdom": "^20.0.2",
 		"lodash": "^4.17.21",
-		"npm": "^8.19.3",
 		"opener": "^1.5.2",
 		"phaser": "^3.55.2",
 		"socket.io": "^4.5.3",

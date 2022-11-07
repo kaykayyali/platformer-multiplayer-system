@@ -1,32 +1,37 @@
 // Webpack
-const webpack = require("webpack");
-const webpackDevMiddleware = require("webpack-dev-middleware");
-const config = require("./webpack.config.js");
-const compiler = webpack(config);
+import webpack from "webpack";
+import webpackDevMiddleware from "webpack-dev-middleware";
+import * as config from "./webpack.config.cjs";
+const compiler = webpack(config.default);
 const webpackInstance = webpackDevMiddleware(compiler, {
-	publicPath: config.output.publicPath,
+	publicPath: "/",
 	writeToDisk: true,
 });
 
+// Fix for __dirname
+import * as url from "url";
+const __dirname = url.fileURLToPath(new URL(".", import.meta.url));
+
 // Util to open the browser for you on start
-const opener = require("opener");
+import opener from "opener";
 
-const express = require("express");
-const http = require("http");
-const fs = require("fs");
-const path = require("path");
-const jsdom = require("jsdom");
+import express from "express";
+import { createServer } from "http";
+import path from "path";
+import jsdom from "jsdom";
 
-const DatauriParser = require("datauri/parser");
-const parser = new DatauriParser();
+import DataURIParser from "datauri/parser.js";
+const parser = new DataURIParser();
 
 const app = express();
-const server = http.createServer(app);
-const { Server } = require("socket.io");
+const server = createServer(app);
+import { Server } from "socket.io";
 const io = new Server(server);
 
 app.use(webpackInstance);
-// app.use(express.static("dist"));
+app.use(express.static("src"));
+
+server.listen(3000);
 
 io.on("connection", (socket) => {
 	console.log("a user connected");
@@ -36,13 +41,11 @@ webpackInstance.waitUntilValid(() => {
 	const filename = webpackInstance.getFilenameFromUrl("/server.bundle.js");
 
 	console.log(`Filename is ${filename}`);
-});
-
-server.listen(3000, function () {
 	console.log("Server Ready on http://localhost:3000");
 	if (!process.env.PROD) {
 		opener("http://localhost:3000");
 	}
+	setupAuthoritativePhaser();
 });
 
 const { JSDOM } = jsdom;
@@ -51,8 +54,10 @@ function setupAuthoritativePhaser() {
 		runScripts: "dangerously",
 		resources: "usable",
 		pretendToBeVisual: true,
+		url: "http://localhost:3000",
 	})
 		.then((dom) => {
+			console.log("location is", dom.window.location.href);
 			dom.window.io = io;
 			dom.window.URL.createObjectURL = (blob) => {
 				if (blob) {
@@ -68,4 +73,3 @@ function setupAuthoritativePhaser() {
 			console.log(error.message);
 		});
 }
-setupAuthoritativePhaser();
