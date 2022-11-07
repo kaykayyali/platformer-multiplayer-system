@@ -2,11 +2,6 @@
 import webpack from "webpack";
 import webpackDevMiddleware from "webpack-dev-middleware";
 import * as config from "./webpack.config.cjs";
-const compiler = webpack(config.default);
-const webpackInstance = webpackDevMiddleware(compiler, {
-	publicPath: "/",
-	writeToDisk: true,
-});
 
 // Fix for __dirname
 import * as url from "url";
@@ -29,6 +24,11 @@ import { Server } from "socket.io";
 const io = new Server(server);
 
 if (process.env.NODE_ENV !== "production") {
+	const compiler = webpack(config.default);
+	const webpackInstance = webpackDevMiddleware(compiler, {
+		publicPath: "/",
+		writeToDisk: true,
+	});
 	app.use(webpackInstance);
 	webpackInstance.waitUntilValid(() => {
 		const filename =
