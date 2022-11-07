@@ -28,18 +28,22 @@ const server = createServer(app);
 import { Server } from "socket.io";
 const io = new Server(server);
 
-app.use(webpackInstance);
+if (process.env.NODE_ENV !== "production") {
+	app.use(webpackInstance);
+	webpackInstance.waitUntilValid(() => {
+		const filename =
+			webpackInstance.getFilenameFromUrl("/server.bundle.js");
 
+		console.log(`Filename is ${filename}`);
+		console.log("Server Ready on http://localhost:3000");
+		setupAuthoritativePhaser();
+	});
+} else {
+	app.use(express.static("dist"));
+	setupAuthoritativePhaser();
+}
 
 server.listen(3000);
-
-webpackInstance.waitUntilValid(() => {
-	const filename = webpackInstance.getFilenameFromUrl("/server.bundle.js");
-
-	console.log(`Filename is ${filename}`);
-	console.log("Server Ready on http://localhost:3000");
-	setupAuthoritativePhaser();
-});
 
 const { JSDOM } = jsdom;
 function setupAuthoritativePhaser() {

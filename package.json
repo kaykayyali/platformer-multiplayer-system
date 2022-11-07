@@ -8,6 +8,7 @@
 	},
 	"scripts": {
 		"start": "npm run server",
+		"prod:logs": "heroku logs --tail -a multi-test-kk",
 		"server": "node --loader=./loader.mjs --no-warnings server.js",
 		"watch": "webpack --watch",
 		"build": "webpack"
